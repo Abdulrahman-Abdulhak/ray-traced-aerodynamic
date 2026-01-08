@@ -10,8 +10,7 @@ class RayTracedShadowSamplerEstimator : public FrontalAreaEstimator {
 public:
     double estimateFrontalArea(const Mesh& mesh,
                                const Vec3& windDir,
-                               int samples,
-                               uint32_t rngSeed) const override;
+                               uint32_t samples) const override;
 };
 
 } // namespace rtsa

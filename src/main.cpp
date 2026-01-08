@@ -25,8 +25,7 @@ static bool parseVec3(int argc, char** argv, int& i, Vec3& out) {
 int main_cli(int argc, char** argv) {
     // Defaults
     std::string meshPath;
-    int samples = 1024;
-    uint32_t seed = 1337;
+    uint32_t samples = 1024; // increase for better accuracy
     double rho = 1.225;
     double Cd = 1.0;
     Vec3 wind{1.0, 0.0, 0.0};
@@ -38,7 +37,6 @@ int main_cli(int argc, char** argv) {
         std::string a = argv[i];
         if (a=="--mesh" && i+1<argc) meshPath = argv[++i];
         else if (a=="--samples" && i+1<argc) samples = std::atoi(argv[++i]);
-        else if (a=="--seed" && i+1<argc) seed = static_cast<uint32_t>(std::atoi(argv[++i]));
         else if (a=="--rho" && i+1<argc) rho = std::atof(argv[++i]);
         else if (a=="--cd" && i+1<argc) Cd = std::atof(argv[++i]);
         else if (a=="--wind") { if (!parseVec3(argc, argv, i, wind)) { std::cerr<<"Invalid --wind args\n"; return 1; } }
@@ -77,7 +75,7 @@ int main_cli(int argc, char** argv) {
         double v = w.length();
         const Mesh* m = obj->mesh();
 
-        double area = estimator.estimateFrontalArea(*m, w.normalized(), samples, seed);
+        double area = estimator.estimateFrontalArea(*m, w.normalized(), samples);
         double drag = computeDragMagnitude(rho, Cd, v, area);
 
         std::cout << step << "," << time << "," << w.x << "," << w.y << "," << w.z

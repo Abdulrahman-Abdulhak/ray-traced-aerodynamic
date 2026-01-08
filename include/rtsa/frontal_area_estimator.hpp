@@ -15,8 +15,7 @@ public:
     // `samples` controls sampling resolution; `rngSeed` controls determinism.
     virtual double estimateFrontalArea(const Mesh& mesh,
                                        const Vec3& windDir,
-                                       int samples,
-                                       uint32_t rngSeed) const = 0;
+                                       uint32_t samples) const = 0;
 };
 
 } // namespace rtsa
