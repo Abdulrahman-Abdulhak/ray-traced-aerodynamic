@@ -1,3 +1,16 @@
+# Build artifacts
+/build/
+/build-*/
+bin/
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+
+# Editor
+*.swp
+.vscode/
 .vscode
 .env
 
