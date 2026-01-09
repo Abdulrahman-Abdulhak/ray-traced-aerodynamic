@@ -207,7 +207,7 @@ double RayTracedShadowSamplerEstimator::estimateFrontalArea(
 ) const {
     auto plane = computeSamplingSquare(mesh, windDir);
     auto samplePoints = computeSamplingPoints(plane, samples);
-    auto farDist = 1e6;
+    auto farDist = 1e19;
     auto rays = createRaysFromDistantPoint(plane, samplePoints, windDir, farDist);
     auto hits = countHits(rays, mesh);
     double planeLengthSide = plane.halfSize * 2.0;

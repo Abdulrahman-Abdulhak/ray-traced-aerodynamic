@@ -4,12 +4,21 @@
 
 Set-Location -LiteralPath (Get-Location)
 
+# Support optional exclusion of main.cpp when invoked with --no-main or -NoMain.
+$excludeMain = $false
+if ($args -contains '--no-main' -or $args -contains '-NoMain') {
+    $excludeMain = $true
+}
+
 $srcRoot = Join-Path (Get-Location) 'src'
 $outPath = Join-Path (Get-Location) 'sources.txt'
 
 # Collect .cpp and .c files
 $files = Get-ChildItem -Recurse -Path $srcRoot -File |
-    Where-Object { $_.Extension -in @('.cpp', '.c') } |
+    Where-Object {
+        $_.Extension -in @('.cpp', '.c') -and
+        (-not $excludeMain -or $_.Name -ne 'main.cpp')
+    } |
     ForEach-Object {
         $p = $_.FullName -replace '\\','/'
         '"' + $p + '"'
